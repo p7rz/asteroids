@@ -38,10 +38,15 @@ def main():
         for item in updatable:
             item.update(dt)
         for asteroid in asteroids:
-            if CircleShape.collides_with(player, asteroid):
+            if player.collides_with(asteroid):
                 log_event("player_hit")
                 print("Game over!")
                 sys.exit()
+            for shot in shots:
+                log_event("asteroid_shot")
+                if shot.collides_with(asteroid):
+                    shot.kill()
+                    asteroid.split()
         for item in drawable:
             item.draw(screen)
         pygame.display.flip()
